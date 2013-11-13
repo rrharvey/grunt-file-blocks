@@ -1,14 +1,10 @@
-# Warning
-
-> This plugin is not ready for production use.
-
 # grunt-html-prep
 
-> Prepares HTML files by inserting or removing elements. Script elements and style sheet links
+Prepares HTML files by inserting or removing elements. Script elements and style sheet links
 may be added to an HTML file by placing comment elements that serve as an anchor for insertion. Blocks may 
 be also be removed.
 
-This plugin is designed for Grunt 0.4 and newer.
+> This plugin is designed for Grunt 0.4 and newer.
 
 ## Getting Started
 
