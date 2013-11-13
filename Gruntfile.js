@@ -16,6 +16,7 @@ module.exports = function (grunt) {
             all: [
               'Gruntfile.js',
               'tasks/*.js',
+              'lib/*.js',
               '<%= nodeunit.tests %>',
             ],
             options: {
@@ -28,6 +29,13 @@ module.exports = function (grunt) {
             tests: ['tmp'],
         },
 
+        copy: {
+            dev: {
+                src: 'test/fixtures/sample.html',
+                dest: 'tmp/sample_dev.html'
+            }
+        },
+
         // Configuration to be run (and then tested).
         htmlprep: {
             options: {
@@ -35,10 +43,11 @@ module.exports = function (grunt) {
                 removeAnchors: false
             },
             dev: {
-                html: 'test/fixtures/sample.html',
+                html: 'tmp/sample_dev.html',
                 blocks: {
-                    'app.js': { src: 'test/fixtures/js/*.js' },
-                    'styles.css': { src: ['test/fixtures/css/*.css', 'test/fixtures/*.css'] }
+                    'app.js': { src: 'test/fixtures/js/*.js', prefix: '~/' },
+                    'styles.css': { src: ['test/fixtures/css/*.css', 'test/fixtures/*.css'] },
+                    'reload': {}
                 },
                 options: {
                     removeAnchors: false,
@@ -47,10 +56,14 @@ module.exports = function (grunt) {
             },
             dist: {
                 html: 'test/fixtures/sample.html',
+                dest: 'tmp/sample_dist.html',
                 blocks: {
                     'app.js': { src: 'test/fixtures/js/*.js' },
                     'styles.css': { src: ['test/fixtures/css/*.css', 'test/fixtures/*.css'] },
                     'reload': { removeBlock: true }
+                },
+                options: {
+                    removeAnchors: true
                 }
             }
         },
@@ -69,14 +82,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
-
-    grunt.registerTask('debug', ['clean', 'htmlprep']);
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
     grunt.registerTask('test', ['clean', 'htmlprep', 'nodeunit']);
 
-    // By default, lint and run all tests.
-    grunt.registerTask('default', ['jshint', 'test']);
-
+    grunt.registerTask('default', ['clean', 'copy', 'htmlprep']);
 };
