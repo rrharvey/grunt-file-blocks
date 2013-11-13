@@ -1,0 +1,44 @@
+{
+  "name": "grunt-html-prep",
+  "description": "Prepares HTML files by inserting or removing elements.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/happyharv/grunt-html-prep",
+  "author": {
+    "name": "Ryan Harvey"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/happyharv/grunt-html-prep.git"
+  },
+  "bugs": {
+    "url": "https://github.com/happyharv/grunt-html-prep/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/happyharv/grunt-html-prep/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.1",
+    "lodash": "~2.3.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin",
+    "htmlprep",
+    "html"
+  ]
+}
