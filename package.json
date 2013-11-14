@@ -1,6 +1,6 @@
 {
   "name": "grunt-html-prep",
-  "description": "Prepares HTML files by inserting or removing elements.",
+  "description": "A Grunt task that prepares HTML files by inserting or removing content into marked blocks.",
   "version": "0.1.0",
   "homepage": "https://github.com/happyharv/grunt-html-prep",
   "author": {
@@ -30,9 +30,9 @@
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-copy": "~0.4.1",
     "grunt": "~0.4.1",
-    "lodash": "~2.3.0",
-    "grunt-contrib-copy": "~0.4.1"
+    "lodash": "~2.3.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
@@ -40,6 +40,7 @@
   "keywords": [
     "gruntplugin",
     "htmlprep",
-    "html"
+    "html",
+    "css"
   ]
 }
