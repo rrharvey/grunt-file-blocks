@@ -41,6 +41,9 @@
     "gruntplugin",
     "htmlprep",
     "html",
-    "css"
+    "css",
+    "prep",
+    "prepare",
+    "script"
   ]
 }
