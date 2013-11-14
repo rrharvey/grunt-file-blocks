@@ -93,16 +93,16 @@ grunt.initConfig({
     dev: {
       html: 'index.html',
       blocks: {
-        'app': { src: 'app/{,*/}*.js },
-        'styles': { src: 'app/styles/*.css' }
+        'app': { src: 'app/{,*/}*.js' },
+        'styles': { src: ['app/styles/*.css', 'app/lib/styles/*.css' }
       }
     },
     dist: {
       html: 'index.html',
       dest: 'dist/index.html',
       blocks: {
-        'app': { src: 'app/{,*/}*.js },
-        'styles': { src: 'app/styles/*.css' },
+        'app': { src: 'app/{,*/}*.js' },
+        'styles': { src: ['app/styles/*.css', 'app/lib/styles/*.css' }
         'reload': { removeBlock: true }
       },
       options: {
@@ -121,14 +121,14 @@ All options may be specified at the task, target or block level.
 Type: `Boolean`
 Default value: `false`
 
-If true, the HTML comment elements that serve as a block anchor are removed
+If set to true the HTML comment elements that serve as a block anchor are removed
 during processing.
 
 #### removeBlock
 Type: `Boolean`
 Default value: `false`
 
-If true, the entire block, including comment anchors, is removed during 
+If set to true the entire block, including comment anchors, is removed during 
 processing.
 
 ### Target Properties
