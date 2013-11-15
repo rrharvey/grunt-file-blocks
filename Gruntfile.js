@@ -43,28 +43,34 @@ module.exports = function (grunt) {
                 removeAnchors: false
             },
             dev: {
-                html: 'tmp/sample_dev.html',
-                blocks: {
-                    'app.js': { src: 'test/fixtures/js/*.js', prefix: '~/' },
-                    'styles.css': { src: ['test/fixtures/css/*.css', 'test/fixtures/*.css'] },
-                    'reload': {}
-                },
-                options: {
-                    removeAnchors: false,
-                    removeBlock: false
-                }
+                files: [
+                    {
+                        src: ['tmp/sample_dev.html'],
+                        blocks: [
+                            { name: 'styles', src: 'test/fixtures/css/*.css' },
+                            { name: 'app', src: ['test/fixtures/js/script1.js', 'test/fixtures/js/script2.js'], prefix: '~/' }
+                        ]
+                    },
+                    {
+                        src: 'test/fixtures/sample.js',
+                        dest: 'tmp/sample_dev.js',
+                        blocks: {
+                            'references': { src: 'test/fixtures/js/*.js' }
+                        }
+                    }
+                ]
             },
             dist: {
-                html: 'test/fixtures/sample.html',
-                dest: 'tmp/sample_dist.html',
-                blocks: {
-                    'app.js': { src: 'test/fixtures/js/*.js' },
-                    'styles.css': { src: ['test/fixtures/css/*.css', 'test/fixtures/*.css'] },
-                    'reload': { removeBlock: true }
-                },
                 options: {
                     removeAnchors: true
-                }
+                },
+                src: 'test/fixtures/sample.html',
+                dest: 'tmp/sample_dist.html',
+                blocks: [
+                    { name: 'styles', src: ['test/fixtures/css/*.css'] },
+                    { name: 'app', src: ['test/fixtures/js/script1.js', 'test/fixtures/js/script2.js'], prefix: '~/' },
+                    { name: 'reload', removeBlock: true }
+                ]
             }
         },
 
@@ -72,7 +78,6 @@ module.exports = function (grunt) {
         nodeunit: {
             tests: ['test/*_test.js'],
         },
-
     });
 
     // Actually load this plugin's task(s).

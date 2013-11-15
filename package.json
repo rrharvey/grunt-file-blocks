@@ -43,6 +43,7 @@
     "gruntplugin",
     "htmlprep",
     "html",
+	"insert",
     "css",
     "prep",
     "prepare",

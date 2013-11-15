@@ -14,60 +14,83 @@ var BlockConfig = require('../lib/blockconfig');
 var grunt = require('grunt');
 var _ = require('lodash');
 
-var validateHtmlFile = function (filename) {
-    if (!filename) {
-        grunt.warn('Html file must be specified using the "html" property.');
-    }
-
-    if (!grunt.file.exists(filename)) {
-        grunt.warn('Html file "' + filename + '" not found.');
-    }
-
-    return filename;
-};
-
 module.exports = function (grunt) {
     var TASKNAME = 'htmlprep';
 
     /**
      * Normalize and return block configurations from the Gruntfile.
-     * @param {Object.<string, object>} blocks - The blocks configuration object from the Gruntfile.
+     * @param {Object[]|Object.<string, object>} blocks - The block configurations from the Gruntfile.
      * @returns {BlockConfig[]} 
      */
     var getConfigs = function (data, options) {
         var configs = [];
-        _.forOwn(data, function (value, name) {
-            configs.push(new BlockConfig(name, value, options));
-        });
+
+        if (_.isArray(data)) {
+            _(data).forEach(function (block) {
+                configs.push(new BlockConfig(block.name, block, options));
+            });
+        } else if (_.isPlainObject(data)) {
+            _.forOwn(data, function (value, name) {
+                configs.push(new BlockConfig(name, value, options));
+            });
+        } else {
+            grunt.warn('Block configuration must be an array or object.');
+        }
+
         return configs;
     };
-    
-    grunt.registerMultiTask('htmlprep', 'Prepares HTML files by inserting or removing elements.', function () {
+
+    /**
+     * Validate the source-destination file mapping.
+     * @param {Object} A source-destination file mapping.
+     */
+    var validateFile = function (file) {
+        if (file.src.length > 1) {
+            var ignored = file.src.splice(1);
+            grunt.log.errorlns('Expected a single source file. Ignoring ' + ignored.join(', ') + '.');
+        }
+
+        if (!file.src[0]) {
+            grunt.warn('Source files not found for pattern "' + file.orig.src[0] + '".');
+        }
+
+        if (!grunt.file.exists(file.src[0])) {
+            grunt.warn('Source file ' + file.src[0] + ' not found.');
+        }
+    };
+
+    grunt.registerMultiTask(TASKNAME, 'Prepares a block in a file by inserting or removing a line (script tag, link, or reference) for each file matching a specified pattern.', function () {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             removeBlock: false,
             removeAnchors: false
+        }), task = this;
+
+        this.files.forEach(function (file) {
+            validateFile(file);
+            var srcPath = file.src[0];
+            var destPath = file.dest;
+
+            if (!!file.blocks) {
+                // There are blocks are defined
+                var configs = getConfigs(file.blocks, options);
+                var srcFile = new File(srcPath).load();
+                var processor = new FileProcessor(srcFile);
+                var blocks = processor.getBlocks(configs);
+
+                grunt.log.debug('Source file before processing.');
+                grunt.log.debug(srcFile.content);
+
+                blocks.forEach(function (block) {
+                    block.updateFiles();
+                    processor.processBlock(block);
+                });
+
+                grunt.log.debug('Source file after processing.');
+                grunt.log.debug(srcFile.content);
+
+                srcFile.save(destPath);
+            }
         });
-        
-        var htmlFileName = validateHtmlFile(this.data.html);
-
-        var file = new File(htmlFileName);
-        file.read();
-
-        var configs = getConfigs(this.data.blocks || [], options);
-
-        var processor = new FileProcessor(file);
-        var blocks = processor.getBlocks(configs);
-
-        grunt.log.debug(file.content);
-
-        blocks.forEach(function (block) {
-            block.updateFiles();
-            processor.processBlock(block);
-        });
-
-        grunt.log.debug(file.content);
-
-        file.save(this.data.dest);
     });
 };
