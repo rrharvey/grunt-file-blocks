@@ -17,6 +17,10 @@ var _ = require('lodash');
 module.exports = function (grunt) {
     var TASKNAME = 'fileblocks';
 
+    var overwriteProps = _.partialRight(_.assign, function (a, b) {
+        return typeof b === 'undefined' ? a : b;
+    });
+
     /**
      * Normalize and return block configurations from the Gruntfile.
      * @param {Object[]|Object.<string, object>} blocks - The block configurations from the Gruntfile.
@@ -74,6 +78,7 @@ module.exports = function (grunt) {
             
             if (!!file.blocks) {
                 // There are blocks are defined
+                overwriteProps(options, file.options);
                 var configs = getConfigs(file.blocks, options);
                 var srcFile = new File(srcPath).load();
                 var processor = new FileProcessor(srcFile);

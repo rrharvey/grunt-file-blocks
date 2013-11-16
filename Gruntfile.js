@@ -40,11 +40,19 @@ module.exports = function (grunt) {
         fileblocks: {
             options: {
                 removeBlock: false,
-                removeAnchors: false
+                removeAnchors: false,
+                removeFiles: false,
+                prefix: ''
             },
             dev: {
+                options: {
+                    prefix: '!!!'
+                },
                 files: [
                     {
+                        options: {
+                            prefix: ''
+                        },
                         src: ['tmp/sample_dev.html'],
                         blocks: [
                             { name: 'styles', src: 'spec/fixtures/css/*.css' },
