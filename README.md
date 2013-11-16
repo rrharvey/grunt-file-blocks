@@ -1,6 +1,6 @@
-# grunt-html-prep
+# grunt-file-blocks
 
-Prepares HTML files by inserting or removing content. Replacement blocks are identified by placing HTML comment elements that identify the beginning and end of the block.
+Prepares HTML files by inserting or removing content. Replacement blocks are identified by placing comments that identify the beginning and end of the block.
 
 > This plugin is designed for Grunt 0.4 and newer.
 
