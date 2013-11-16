@@ -34,7 +34,7 @@
     "grunt": "~0.4.1"
   },
   "dependencies": {
-	"lodash": "~2.3.0"
+    "lodash": "~2.3.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
@@ -43,7 +43,7 @@
     "gruntplugin",
     "htmlprep",
     "html",
-	"insert",
+    "insert",
     "css",
     "prep",
     "prepare",

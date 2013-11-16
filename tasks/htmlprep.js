@@ -63,14 +63,15 @@ module.exports = function (grunt) {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
             removeBlock: false,
-            removeAnchors: false
-        }), task = this;
+            removeAnchors: false,
+            removeFiles: false
+        });
 
         this.files.forEach(function (file) {
             validateFile(file);
             var srcPath = file.src[0];
             var destPath = file.dest;
-
+            
             if (!!file.blocks) {
                 // There are blocks are defined
                 var configs = getConfigs(file.blocks, options);
@@ -89,7 +90,13 @@ module.exports = function (grunt) {
                 grunt.log.debug('Source file after processing.');
                 grunt.log.debug(srcFile.content);
 
-                srcFile.save(destPath);
+                var updatedBlocks = blocks.filter(function (block) {
+                    return block.changed;
+                });
+
+                if (updatedBlocks.length > 0) {
+                    srcFile.save(destPath);
+                }
             }
         });
     });
