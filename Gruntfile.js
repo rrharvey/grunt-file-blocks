@@ -31,7 +31,7 @@ module.exports = function (grunt) {
 
         copy: {
             dev: {
-                src: 'test/fixtures/sample.html',
+                src: 'spec/fixtures/sample.html',
                 dest: 'tmp/sample_dev.html'
             }
         },
@@ -47,15 +47,15 @@ module.exports = function (grunt) {
                     {
                         src: ['tmp/sample_dev.html'],
                         blocks: [
-                            { name: 'styles', src: 'test/fixtures/css/*.css' },
-                            { name: 'app', src: ['test/fixtures/js/script1.js', 'test/fixtures/js/script2.js'], prefix: '~/' }
+                            { name: 'styles', src: 'spec/fixtures/css/*.css' },
+                            { name: 'app', src: ['spec/fixtures/js/script1.js', 'spec/fixtures/js/script2.js'], prefix: '~/' }
                         ]
                     },
                     {
-                        src: 'test/fixtures/sample.js',
+                        src: 'spec/fixtures/sample.js',
                         dest: 'tmp/sample_dev.js',
                         blocks: {
-                            'references': { src: 'test/fixtures/js/*.js' }
+                            'references': { src: 'spec/fixtures/js/*.js' }
                         }
                     }
                 ]
@@ -64,20 +64,15 @@ module.exports = function (grunt) {
                 options: {
                     removeAnchors: true
                 },
-                src: 'test/fixtures/sample.html',
+                src: 'spec/fixtures/sample.html',
                 dest: 'tmp/sample_dist.html',
                 blocks: [
-                    { name: 'styles', src: ['test/fixtures/css/*.css'] },
-                    { name: 'app', src: ['test/fixtures/js/script1.js', 'test/fixtures/js/script2.js'], prefix: '~/' },
+                    { name: 'styles', src: ['spec/fixtures/css/*.css'] },
+                    { name: 'app', src: ['spec/fixtures/js/script1.js', 'spec/fixtures/js/script2.js'], prefix: '~/' },
                     { name: 'reload', removeBlock: true }
                 ]
             }
-        },
-
-        // Unit tests.
-        nodeunit: {
-            tests: ['test/*_test.js'],
-        },
+        }
     });
 
     // Actually load this plugin's task(s).
@@ -88,10 +83,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-jasmine-node');
 
-    // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-    // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'htmlprep', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'copy', 'fileblocks', 'jasmine_node']);
 
-    grunt.registerTask('default', ['clean', 'copy', 'htmlprep']);
+    grunt.registerTask('default', ['test']);
 };
