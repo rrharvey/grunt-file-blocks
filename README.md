@@ -1,6 +1,6 @@
 # grunt-file-blocks
 
-Prepares HTML files by inserting or removing content. Replacement blocks are identified by placing comments that identify the beginning and end of the block.
+Prepares a block in a file by inserting or removing a line (script tag, link, or reference) for each file matching a specified pattern.
 
 > This plugin is designed for Grunt 0.4 and newer.
 
@@ -9,77 +9,79 @@ Prepares HTML files by inserting or removing content. Replacement blocks are ide
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install /path/to/grunt-html-prep --save-dev
+npm install /path/to/grunt-file-blocks --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-html-prep');
+grunt.loadNpmTasks('grunt-file-blocks');
 ```
 
-## The "htmlprep" task
+## The "fileblocks" task
 
 ### Overview
-Replacement blocks are identified in the source HTML file by using comment elements. 
+Replacement blocks are identified in the source file by using comments.
 These comments serve as anchors that mark the beginning and end of the block. 
-Script or link tags will be inserted or removed inside the block for each file that is found 
-using file matching patterns. Tags are therefore synchronized with matching files. Blocks may 
+Script tags, links, or reference tags will be inserted or removed inside the block for each file that is found 
+using file matching patterns. These elements are therefore synchronized with matching files. Blocks may 
 also be removed from the HTML file. This is useful for handling debug-only scripts.
 
-### Blocks
-
-#### Block HTML Syntax
-
+#### Block Syntax
 ```html
-<!-- build:<type>(alternate search path) name -->
+<!-- fileblock:<type> name -->
 ... script / link elements, etc.
-<!-- endbuild -->
+<!-- endfileblock -->
+```
+
+```js
+/* fileblock:<type> name -->
+... JavaScript or TypeScript references.
+/* endfilebock */
 ```
  
-__type__: `js`, `css`, or `other`
-
-__alternate search path__: (optional) This is unused by the __htmlprep__ task. 
+__type__: `js`, `css`, `ref`, or `other`
 
 __name__: The block name.  
 
 #### Example Blocks
 
 ```html
-<!-- build:other reload -->
+<!-- fileblock:other reload -->
     <script src="//localhost:35729/livereload.js"></script>
-<!-- endbuild -->
+<!-- fileblock -->
     
-<!-- build:css styles -->
-<!-- endbuild -->
+<!-- fileblock:css styles -->
+<!-- fileblock -->
 
-<!-- build:js app -->
+<!-- fileblock:js app -->
 <script src="js/services/myService.js"></script>
 <script src="js/controllers/mainCtrl.js"></script>
 <script src="js/controllers/anotherCtrl.js"></script>
 <script src="js/app.js"></script>
-<!-- endbuild -->
+<!-- fileblock -->
 ```
+
+```js  
+/* fileblock:libs */
+/// <reference path="libs/somedependency.js" />
+/* endfileblock */
+```
+
+### Existing Tags in Blocks
+If a line is found inside the block that matches the block type template, the file name will be parsed from the content. Existing file names will be compared with those found using the file matching patterns. Files that no longer exist will be removed from the block if the *removeFiles* option is true. New files that are found will be added to the bottom of the list of tags. Existing tags will remain in the same relative position. This allows you to manually change the order of existing script or style sheet tags.
 
 #### Block Templates
 Each matching file name is applied to a template based on the block type. The resulting string is added as a line in the block.
 
-##### Block Type
+#### Block Type
 __js__: `<script src="<%= file %>"></script>`
 
 __css__ : `<link href="<%= file %>" rel="stylesheet" />`
 
-__other__: _none_, block content will not be modified
+__ref__ : `///<reference path="<%= file %>" />`
 
-#### Existing Tags in Blocks
-If a line is found inside the block that matches the block type template, the file name will be parsed from the content. 
-Existing file names will be compared with those found using the file matching patterns. 
-Files that no longer exist will be removed from the block. 
-New files that are found will be added to the bottom of the list of tags. 
-Existing tags will remain in the same relative position. This allows you to manually set the order of existing script or style sheet tags and
-maintain that order over subsequent runs.
-
-### Task Configuration
+__other__: _none, no content will be inserted_
 
 In order to complete the configuration the blocks must be added to the task configuration.
 
@@ -93,16 +95,16 @@ grunt.initConfig({
     dev: {
       html: 'index.html',
       blocks: {
-        'app': { src: 'app/{,*/}*.js' },
-        'styles': { src: ['app/styles/*.css', 'app/lib/styles/*.css' }
+        'app': { src: 'app/{,*/}*.js },
+        'styles': { src: 'app/styles/*.css' }
       }
     },
     dist: {
       html: 'index.html',
       dest: 'dist/index.html',
       blocks: {
-        'app': { src: 'app/{,*/}*.js' },
-        'styles': { src: ['app/styles/*.css', 'app/lib/styles/*.css' }
+        'app': { src: 'app/{,*/}*.js },
+        'styles': { src: 'app/styles/*.css' },
         'reload': { removeBlock: true }
       },
       options: {
@@ -121,14 +123,14 @@ All options may be specified at the task, target or block level.
 Type: `Boolean`
 Default value: `false`
 
-If set to true the HTML comment elements that serve as a block anchor are removed
+If true, the HTML comment elements that serve as a block anchor are removed
 during processing.
 
 #### removeBlock
 Type: `Boolean`
 Default value: `false`
 
-If set to true the entire block, including comment anchors, is removed during 
+If true, the entire block, including comment anchors, is removed during 
 processing.
 
 ### Target Properties
@@ -169,3 +171,6 @@ The *cwd*, *flatten*, *ext*, *rename*, and *matchBase* options may be added to a
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+
+## Release History
+_(Nothing yet)_
