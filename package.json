@@ -1,22 +1,22 @@
 {
-  "name": "grunt-html-prep",
-  "description": "A Grunt task that prepares HTML files by inserting or removing content into marked blocks.",
-  "version": "0.1.0",
-  "homepage": "https://github.com/happyharv/grunt-html-prep",
+  "name": "grunt-file-blocks",
+  "description": "A Grunt task that prepares an HTML, JavaScript or Typescript file by inserting or removing tags into marked blocks for each file that matches a source pattern.",
+  "version": "0.1.1",
+  "homepage": "https://github.com/rrharvey/grunt-file-blocks",
   "author": {
     "name": "Ryan Harvey"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/happyharv/grunt-html-prep.git"
+    "url": "git://github.com/rrharvey/grunt-file-blocks.git"
   },
   "bugs": {
-    "url": "https://github.com/happyharv/grunt-html-prep/issues"
+    "url": "https://github.com/rrharvey/grunt-file-blocks/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/happyharv/grunt-html-prep/blob/master/LICENSE"
+      "url": "https://github.com/rrharvey/grunt-file-blocks/blob/master/LICENSE"
     }
   ],
   "main": "Gruntfile.js",
@@ -41,8 +41,9 @@
   },
   "keywords": [
     "gruntplugin",
-    "htmlprep",
+    "fileblocks",
     "html",
+	"TypeScript",
     "insert",
     "css",
     "prep",

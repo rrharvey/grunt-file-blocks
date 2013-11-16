@@ -1,8 +1,8 @@
 'use strict';
 
 /*
- * grunt-html-prep
- * https://github.com/happyharv/grunt-html-prep
+ * grunt-file-blocks
+ * https://github.com/rrharvey/grunt-file-blocks
  *
  * Copyright (c) 2013 Ryan Harvey
  * Licensed under the MIT license.
@@ -15,7 +15,7 @@ var grunt = require('grunt');
 var _ = require('lodash');
 
 module.exports = function (grunt) {
-    var TASKNAME = 'htmlprep';
+    var TASKNAME = 'fileblocks';
 
     /**
      * Normalize and return block configurations from the Gruntfile.

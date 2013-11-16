@@ -1,6 +1,6 @@
 /*
- * grunt-html-prep
- * https://github.com/happyharv/grunt-html-prep
+ * grunt-file-blocks
+ * https://github.com/rrharvey/grunt-file-blocks
  *
  * Copyright (c) 2013 Ryan Harvey
  * Licensed under the MIT license.
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
         },
 
         // Configuration to be run (and then tested).
-        htmlprep: {
+        fileblocks: {
             options: {
                 removeBlock: false,
                 removeAnchors: false
