@@ -95,11 +95,15 @@ grunt.initConfig({
       prefix: ''
     },
     dev: {
-      /* options may be placed here  */
+      options: {
+          /* options may be placed here */
+      },
       files: [
           {
-              /* options may be placed here */
               src: 'index.html',
+              options: {
+                  /* options may be placed here */
+              },
               blocks: {
                   'styles': { src: 'app/styles/*.css' /* options may be placed here */},
                   'app': { src: 'app/{,*/}*.js' }
