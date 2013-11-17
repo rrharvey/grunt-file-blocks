@@ -167,7 +167,7 @@ i.e. prefix: '~/' Adds a tilde slash path resolver for ASP.NET MVC sites.
 Type: `String`
 
 Specifies the name of the file that will be modified. The task expects this property to match a single file. If you would like to process more than one file per target you
-must use a files array (see below) property.
+must use the *files* property seen below.
 
 #### dest (optional)
 Type: `String`
