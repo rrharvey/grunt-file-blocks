@@ -69,7 +69,7 @@ __name__: The block name.
 ```
 
 ### Existing Tags in Blocks
-If a line is found inside the block that matches the block type template, the file name will be parsed from the content. Existing file names will be compared with those found using the file matching patterns. Files that no longer exist will be removed from the block if the *removeFiles* option is true. New files that are found will be added to the bottom of the list of tags. Existing tags will remain in the same relative position. This allows you to manually change the order of existing script or style sheet tags.
+If a line is found inside the block that matches the block type template, the file name will be parsed from the content. Existing file names will be compared with those found using the file matching patterns. Files that no longer exist will be removed from the block if the *removeFiles* option is true. New files that are found will be added to the bottom of the list. Existing tags will remain in the same relative position. This allows you to manually change the order of existing scripts or style sheets.
 
 #### Block Templates
 Each matching file name is applied to a template based on the block type. The resulting string is added as a line in the block.
@@ -90,25 +90,40 @@ grunt.initConfig({
   htmlprep: {
     options: {
       removeBlock: false,
-      removeAnchors: false
+      removeAnchors: false,
+      removeFiles: false,
+      prefix: ''
     },
     dev: {
-      html: 'index.html',
-      blocks: {
-        'app': { src: 'app/{,*/}*.js },
-        'styles': { src: 'app/styles/*.css' }
-      }
+      /* options may be placed here  */
+      files: [
+          {
+              /* options may be placed here */
+              src: 'index.html',
+              blocks: {
+                  'styles': { src: 'app/styles/*.css' /* options may be placed here */},
+                  'app': { src: 'app/{,*/}*.js' }
+              }
+          },
+          {
+              src: 'app/app.ts',
+              blocks: {
+                  'references': { src: 'app/ts/*.ts' },
+                  'libs': { src: 'typings/*.d.ts', cwd: 'libs', prefix: '../libs' }
+              }
+          }
+      ]
     },
     dist: {
-      html: 'index.html',
-      dest: 'dist/index.html',
-      blocks: {
-        'app': { src: 'app/{,*/}*.js },
-        'styles': { src: 'app/styles/*.css' },
-        'reload': { removeBlock: true }
-      },
       options: {
         removeAnchors: true
+      },
+      src: 'index.html',
+      dest: 'dist/index.html',
+      blocks: {
+        'app': { src: 'app/{,*/}*.js' },
+        'styles': { src: 'app/styles/*.css' },
+        'reload': { removeBlock: true }
       }
     }
   },
@@ -117,27 +132,42 @@ grunt.initConfig({
 
 ### Options
 
-All options may be specified at the task, target or block level.
+All options may be specified at the task, target, source file, or block level.
 
 #### removeAnchors
 Type: `Boolean`
 Default value: `false`
 
-If true, the HTML comment elements that serve as a block anchor are removed
+If true the comments that serve as a block anchor are removed
 during processing.
 
 #### removeBlock
 Type: `Boolean`
 Default value: `false`
 
-If true, the entire block, including comment anchors, is removed during 
+If true the entire block, including comment anchors, is removed during 
 processing.
 
+#### removeFiles
+Type: `Boolean`
+Default value: `false`
+
+If true, existing tags that no longer have a matching file will be removed during processing.
+
+#### prefix
+Type: `String`
+Default value: `undefined`
+
+A prefix that will be added to the patch of every matched file before it is inserted into a block.
+
+i.e. prefix: '~/' Adds a tilde slash path resolver for ASP.NET MVC sites.
+
 ### Target Properties
-#### html
+#### src
 Type: `String`
 
-Specifies the name of the source html file.
+Specifies the name of the file that will be modified. The task expects this property to match a single file. If you would like to process more than one file per target you
+must use a files array (see below) property.
 
 #### dest (optional)
 Type: `String`
@@ -149,22 +179,23 @@ Type: `Object`
 
 A blocks configuration object.
 
-### Block Configuration
+__-- OR --__
+
+#### files
+Type: `Object[]`
+
+This property may be used to specify multiple source files. Each object in the array should specify the three target properties above.
+
+### Blocks Configuration Object
 
 A block configuration specifies file matching patterns. The configuration may also override options from the task or target.
 
 #### Property Names (Keys)
-Must match the name of a block in the HTML file.
+Must match the name of a block in the source file.
 
 #### src
 Type: `String|String[]`
 File [globbing patterns](http://gruntjs.com/configuring-tasks#globbing-patterns) used to find source files.
-
-#### prefix
-Type: `String`
-A prefix that will be added to each matched file name.
-
-i.e. prefix: '~/' Adds a tilde slash path resolver for ASP.NET MVC sites.
 
 ### Advanced Block Configuration Properties
 The *cwd*, *flatten*, *ext*, *rename*, and *matchBase* options may be added to a block configuration object in order to [build the files list dynamically](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically).
@@ -172,5 +203,3 @@ The *cwd*, *flatten*, *ext*, *rename*, and *matchBase* options may be added to a
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-_(Nothing yet)_
