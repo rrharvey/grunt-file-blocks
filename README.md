@@ -1,6 +1,6 @@
 # grunt-file-blocks
 
-Prepares a block in a file by inserting or removing a line (script tag, link, or reference) for each file matching a specified pattern.
+Prepares regions (blocks) in a file by inserting or removing a line (script tag, link, or reference) for each file matching a specified pattern.
 
 > This plugin is designed for Grunt 0.4 and newer.
 
