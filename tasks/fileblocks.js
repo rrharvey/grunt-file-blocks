@@ -78,8 +78,9 @@ module.exports = function (grunt) {
             
             if (!!file.blocks) {
                 // There are blocks are defined
-                overwriteProps(options, file.options);
-                var configs = getConfigs(file.blocks, options);
+                var targetOpts = _.clone(options);
+                overwriteProps(targetOpts, file.options);
+                var configs = getConfigs(file.blocks, targetOpts);
                 var srcFile = new File(srcPath).load();
                 var processor = new FileProcessor(srcFile);
                 var blocks = processor.getBlocks(configs);
