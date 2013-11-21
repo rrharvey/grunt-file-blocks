@@ -87,7 +87,7 @@ In order to complete the configuration the blocks must be added to the task conf
 
 ```js
 grunt.initConfig({
-  htmlprep: {
+  fileblocks: {
     options: {
       removeBlock: false,
       removeAnchors: false,
