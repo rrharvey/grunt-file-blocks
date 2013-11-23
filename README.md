@@ -1,6 +1,6 @@
 # grunt-file-blocks
 
-Replacement blocks are identified in a [source file](https://github.com/rrharvey/grunt-file-blocks/wiki/Source-Files) by using comments.
+Replacement [blocks](https://github.com/rrharvey/grunt-file-blocks/wiki/Blocks) are identified in a [source file](https://github.com/rrharvey/grunt-file-blocks/wiki/Source-Files) by using comments.
 These comments serve as anchors that mark the beginning and end of the block. 
 Script tags, links, reference tags, or other custom content will be inserted or removed inside the block for each file that is found 
 using file matching patterns. The block content is therefore synchronized with matching files. Blocks may 
@@ -75,20 +75,22 @@ Comments define the beginning and end of a [block](https://github.com/rrharvey/g
 
 ### Configure Source Files
 
+One or more [source files](https://github.com/rrharvey/grunt-file-blocks/wiki/Source-Files) must be configured for each Grunt target.
+
 ```js
 grunt.initConfig({
   fileblocks: {
+    dist: {
+      /* Configure a single source file */
+      src: 'index.html',
+      blocks: []
+    }
     dev: {
-      /* Define multiple source files */
+      /* or multiple source files per target. */
       files: [
         { src: 'index.html', blocks: [] }
         { src: 'app/app.ts', blocks: [] }
       ]
-    },
-    dist: {
-      /* or define a single source file */
-      src: 'index.html',
-      blocks: []
     }
   }
 })
