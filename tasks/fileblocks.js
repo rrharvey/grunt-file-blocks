@@ -17,10 +17,6 @@ var _ = require('lodash');
 module.exports = function (grunt) {
     var TASKNAME = 'fileblocks';
 
-    var overwriteProps = _.partialRight(_.assign, function (a, b) {
-        return typeof b === 'undefined' ? a : b;
-    });
-
     /**
      * Normalize and return block configurations from the Gruntfile.
      * @param {Object[]|Object.<string, object>} blocks - The block configurations from the Gruntfile.
@@ -65,21 +61,29 @@ module.exports = function (grunt) {
 
     grunt.registerMultiTask(TASKNAME, 'Prepares a block in a file by inserting or removing a line (script tag, link, or reference) for each file matching a specified pattern.', function () {
         // Merge task-specific and/or target-specific options with these defaults.
-        var options = this.options({
+        var defaultOptions = {
             removeBlock: false,
             removeAnchors: false,
-            removeFiles: false
-        });
+            removeFiles: false,
+            templates: {
+                'js': '<script src="${file}"></script>',
+                'css': '<link href="${file}" rel="stylesheet" />',
+                'ref': '/// <reference path="${file}" />',
+                'raw': '${file}'
+            }
+        };
+
+        var options = _.merge(this.options(), defaultOptions);
 
         this.files.forEach(function (file) {
             validateFile(file);
             var srcPath = file.src[0];
             var destPath = file.dest;
-            
+
             if (!!file.blocks) {
                 // There are blocks are defined
                 var targetOpts = _.clone(options);
-                overwriteProps(targetOpts, file.options);
+                _.merge(targetOpts, file.options);
                 var configs = getConfigs(file.blocks, targetOpts);
                 var srcFile = new File(srcPath).load();
                 var processor = new FileProcessor(srcFile);

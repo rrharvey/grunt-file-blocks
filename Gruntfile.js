@@ -41,11 +41,18 @@ module.exports = function (grunt) {
                 removeBlock: false,
                 removeAnchors: false,
                 removeFiles: false,
-                prefix: ''
+                prefix: '',
+                templates: {
+                    raw: '${file}'
+                }
             },
             dev: {
                 options: {
-                    prefix: '!!!'
+                    prefix: '!!!',
+                    templates: {
+                        raw: '${file},',
+                        ref: '/// <reference data-name="custom" path="${file}" />'
+                    }
                 },
                 files: [
                     {
@@ -55,17 +62,23 @@ module.exports = function (grunt) {
                         src: ['tmp/sample_dev.html'],
                         blocks: [
                             { name: 'styles', src: 'spec/fixtures/css/*.css' },
-                            { name: 'app', src: ['spec/fixtures/js/script1.js', 'spec/fixtures/js/script2.js'], prefix: '~/' }
+                            { name: 'app', src: ['spec/fixtures/js/script1.js', 'spec/fixtures/js/script2.js'], prefix: '~/' },
+                            { name: 'files', src: ['spec/fixtures/js/*.js'] }
                         ]
                     },
                     {
                         src: 'spec/fixtures/sample.js',
                         dest: 'tmp/sample_dev.js',
+                        options: {
+                            templates: {
+                                ref: '/// <reference data-custom="hello" path="${file}" />'
+                            }
+                        },
                         blocks: {
-                            'references': { src: 'spec/fixtures/js/*.js' }
+                            'references': { src: 'spec/fixtures/js/*.js', template: '/// <reference data-custom="local" path="${file}" />' }
+                            }
                         }
-                    }
-                ]
+                    ]
             },
             dist: {
                 options: {
@@ -92,7 +105,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-jasmine-node');
 
-    grunt.registerTask('test', ['clean', 'copy', 'jshint', 'fileblocks', 'jasmine_node']);
+    grunt.registerTask('debug', ['clean', 'copy', 'fileblocks:dev']);
 
-    grunt.registerTask('default', ['test']);
+    grunt.registerTask('test', ['jasmine_node']);
+
+    grunt.registerTask('default', ['debug']);
 };

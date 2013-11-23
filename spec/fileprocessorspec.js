@@ -14,14 +14,26 @@ var JsFileMock = function () {
     return file;
 };
 
+var defaultConfig = {
+    removeBlock: false,
+    removeAnchors: false,
+    removeFiles: false,
+    templates: {
+        'js': '<script src="${file}"></script>',
+        'css': '<link href="${file}" rel="stylesheet" />',
+        'ref': '/// <reference path="${file}" />',
+        'raw': '${file}'
+    }
+};
+
 describe('FileProcessor on HTML file', function () {
     var processor, blockConfigs;
 
     beforeEach(function () {
         blockConfigs = [
-            { name: 'reload', removeBlock: false, removeAnchors: false, removeFiles: false },
-            { name: 'styles', removeBlock: false, removeAnchors: false, removeFiles: false },
-            { name: 'app', removeBlock: false, removeAnchors: false, removeFiles: false }
+            _.extend({ name: 'reload' }, defaultConfig),
+            _.extend({ name: 'styles' }, defaultConfig),
+            _.extend({ name: 'app' }, defaultConfig),
         ];
 
         var file = new HtmlFileMock();
