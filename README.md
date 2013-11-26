@@ -88,8 +88,8 @@ grunt.initConfig({
     dev: {
       /* or multiple source files per target. */
       files: [
-        { src: 'index.html', blocks: [] }
-        { src: 'app/app.ts', blocks: [] }
+        { src: 'index.html', blocks: {} }
+        { src: 'app/app.ts', blocks: {} }
       ]
     }
   }
@@ -126,7 +126,7 @@ fileblocks: {
       removeAnchors: true
     },
     src: 'index.html'
-    blocks: [ /* block definitions */ ]
+    blocks: { /* block definitions */ }
   },
   dev: {
     files: [
