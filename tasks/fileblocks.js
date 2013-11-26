@@ -73,7 +73,7 @@ module.exports = function (grunt) {
             }
         };
 
-        var options = _.merge(this.options(), defaultOptions);
+        var options = _.merge(defaultOptions, this.options());
 
         this.files.forEach(function (file) {
             validateFile(file);
