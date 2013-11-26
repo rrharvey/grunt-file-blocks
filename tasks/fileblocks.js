@@ -80,33 +80,40 @@ module.exports = function (grunt) {
             var srcPath = file.src[0];
             var destPath = file.dest;
 
-            if (!!file.blocks) {
-                // There are blocks are defined
-                var targetOpts = _.clone(options);
-                _.merge(targetOpts, file.options);
-                var configs = getConfigs(file.blocks, targetOpts);
-                var srcFile = new File(srcPath).load();
-                var processor = new FileProcessor(srcFile);
-                var blocks = processor.getBlocks(configs);
+            if (!!!file.blocks){
+                grunt.warn('No blocks configured for ' + srcPath);
+            }
 
-                grunt.log.debug('Source file before processing.');
-                grunt.log.debug(srcFile.content);
+            // There are blocks are defined
+            var targetOpts = _.clone(options);
+            _.merge(targetOpts, file.options);
+            var configs = getConfigs(file.blocks, targetOpts);
 
-                blocks.forEach(function (block) {
-                    block.updateFiles();
-                    processor.processBlock(block);
-                });
+            if (configs.length === 0){
+                grunt.warn('No blocks configured for ' + srcPath);
+            }
 
-                grunt.log.debug('Source file after processing.');
-                grunt.log.debug(srcFile.content);
+            var srcFile = new File(srcPath).load();
+            var processor = new FileProcessor(srcFile);
+            var blocks = processor.getBlocks(configs);
 
-                var updatedBlocks = blocks.filter(function (block) {
-                    return block.changed;
-                });
+            grunt.log.debug('Source file before processing.');
+            grunt.log.debug(srcFile.content);
 
-                if (updatedBlocks.length > 0) {
-                    srcFile.save(destPath);
-                }
+            blocks.forEach(function (block) {
+                block.updateFiles();
+                processor.processBlock(block);
+            });
+
+            grunt.log.debug('Source file after processing.');
+            grunt.log.debug(srcFile.content);
+
+            var updatedBlocks = blocks.filter(function (block) {
+                return block.changed;
+            });
+
+            if (updatedBlocks.length > 0) {
+                srcFile.save(destPath);
             }
         });
     });
