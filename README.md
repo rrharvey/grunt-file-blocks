@@ -98,14 +98,14 @@ grunt.initConfig({
 
 ### Define Blocks
 
-Add a [block](https://github.com/rrharvey/grunt-file-blocks/wiki/Blocks) configuration object to the blocks array for each block in a source file.
+Add [block](https://github.com/rrharvey/grunt-file-blocks/wiki/Blocks) configurations for each source file.
 
 ```js
-/* The blocks array for a source file in the Gruntfile.js configuration file. */
-blocks: [
-  { name: 'libs', src: 'libs/*.js' },
-  { name: 'app', src: 'app/js/*.js' }
-]
+/* The blocks object for a source file in the Gruntfile.js configuration file. */
+blocks: {
+  'libs': { src: 'libs/*.js' },
+  'app': { src: 'app/js/*.js' }
+}
 ```
 
 ### Configure Options
@@ -136,9 +136,9 @@ fileblocks: {
           prefix: '~/' 
         },
         src: 'index.html',
-        blocks: [
-          { name: 'libs', src: '*.js', cwd: 'libs', /* Block options */ prefix: '../libs' }
-        ]
+        blocks: {
+          'libs': { src: '*.js', cwd: 'libs', /* Block options */ prefix: '../libs' }
+        }
       },
     ]
   }
