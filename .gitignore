@@ -164,3 +164,4 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 >>>>>>> dc6b47d4d9ae30b9bf9b1806a7f8229d997f956f
+*.njsproj
