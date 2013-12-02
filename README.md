@@ -24,7 +24,7 @@ grunt.loadNpmTasks('grunt-file-blocks');
 
 ## Using the "fileblocks" Task
 
-Follow these steps to use the task. For more details see the [wiki](https://github.com/rrharvey/grunt-file-blocks/wiki).
+Follow these steps to use the task. For more details see the [wiki](https://github.com/rrharvey/grunt-file-blocks/wiki) or this <a href="http://www.rrharvey.com/2013/12/insert-script-tags-automatically-using-grunt/" target="_blank">article</a>.
 
 1. Add block anchors to a source file.
 2. Define source files in the Grunfile.js task configuration.
@@ -83,7 +83,7 @@ grunt.initConfig({
     dist: {
       /* Configure a single source file */
       src: 'index.html',
-      blocks: []
+      blocks: { /* block definitions */ }
     }
     dev: {
       /* or multiple source files per target. */
