@@ -65,6 +65,7 @@ module.exports = function (grunt) {
             removeBlock: false,
             removeAnchors: false,
             removeFiles: false,
+            rebuild: false,
             templates: {
                 'js': '<script src="${file}"></script>',
                 'css': '<link href="${file}" rel="stylesheet" />',
@@ -101,7 +102,13 @@ module.exports = function (grunt) {
             grunt.log.debug(srcFile.content);
 
             blocks.forEach(function (block) {
-                block.updateFiles();
+
+                if (block.config.rebuild) {
+                    block.rebuildFiles();
+                } else {
+                    block.updateFiles();
+                }
+                
                 processor.processBlock(block);
             });
 
