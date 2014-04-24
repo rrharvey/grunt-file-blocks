@@ -32,7 +32,8 @@
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-copy": "~0.4.1",
     "grunt": "~0.4.1",
-    "grunt-jasmine-node": "~0.1.0"
+    "grunt-jasmine-node": "~0.1.0",
+    "grunt-bump": "0.0.13"
   },
   "dependencies": {
     "lodash": "~2.3.0"

@@ -104,6 +104,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-bump');
 
     grunt.registerTask('debug', ['clean', 'copy', 'fileblocks:dev']);
 
