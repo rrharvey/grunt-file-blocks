@@ -146,6 +146,11 @@ fileblocks: {
 ```
 
 ### Existing Lines in Blocks
+Blocks can be processed in two ways.
+
+1. Rebuild the block every time using the "rebuild" option.
+2. Add and optionally remove lines using the following rules.
+
 If a line is found inside the block that matches the block type template, the file name will be parsed from the content. Existing file names will be compared with those found using the file matching patterns. Files that no longer exist will be removed from the block if the *removeFiles* option is true. New files that are found will be added to the bottom of the list. Existing tags will remain in the same relative position. This allows you to manually change the order of existing scripts or style sheets.
 
 ## Contributing
