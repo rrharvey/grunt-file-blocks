@@ -54,17 +54,17 @@ Comments define the beginning and end of a [block](https://github.com/rrharvey/g
 ```html
 <!-- fileblock:other reload -->
     <script src="//localhost:35729/livereload.js"></script>
-<!-- fileblock -->
+<!-- endffileblock -->
     
 <!-- fileblock:css styles -->
-<!-- fileblock -->
+<!-- endfileblock -->
 
 <!-- fileblock:js app -->
 <script src="js/services/myService.js"></script>
 <script src="js/controllers/mainCtrl.js"></script>
 <script src="js/controllers/anotherCtrl.js"></script>
 <script src="js/app.js"></script>
-<!-- fileblock -->
+<!-- endfileblock -->
 ```
 
 ```js  
