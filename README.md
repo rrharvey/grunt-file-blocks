@@ -118,6 +118,11 @@ fileblocks: {
   options: {
     templates: {
       md: '+ ${file}' // Add a custom template
+    },
+    templatesFn: {
+      js: function (file) {
+        return file.substring(3);
+      }
     }
   }
   dist: {
