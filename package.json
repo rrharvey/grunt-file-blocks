@@ -1,7 +1,7 @@
 {
   "name": "grunt-file-blocks",
   "description": "A Grunt task that prepares an HTML, JavaScript or Typescript file by inserting or removing tags into marked blocks for each file that matches a source pattern.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/rrharvey/grunt-file-blocks",
   "author": {
     "name": "Ryan Harvey"
