@@ -72,7 +72,7 @@ module.exports = function (grunt) {
                 'ref': '/// <reference path="${file}" />',
                 'raw': '${file}'
             },
-            templateFn: {}
+            templatesFn: {}
         };
 
         var options = _.merge(defaultOptions, this.options());
