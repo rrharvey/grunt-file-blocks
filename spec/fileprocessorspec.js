@@ -23,7 +23,8 @@ var defaultConfig = {
         'css': '<link href="${file}" rel="stylesheet" />',
         'ref': '/// <reference path="${file}" />',
         'raw': '${file}'
-    }
+    },
+    templatesFn: {}
 };
 
 describe('FileProcessor on HTML file', function () {
@@ -85,7 +86,7 @@ describe('FileProcessor on HTML file', function () {
         //expect(processor.file.content).not.toMatch('localhost:35729');
     });
 
-    it("shoudl remove the block anchors if the removeAnchors option is true", function () {
+    it("should remove the block anchors if the removeAnchors option is true", function () {
         var blocks = processor.getBlocks(blockConfigs);
         var stylesBlock = _(blocks).find(function (b) {
             return b.name === 'styles';

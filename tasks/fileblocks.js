@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     /**
      * Normalize and return block configurations from the Gruntfile.
      * @param {Object[]|Object.<string, object>} blocks - The block configurations from the Gruntfile.
-     * @returns {BlockConfig[]} 
+     * @returns {BlockConfig[]}
      */
     var getConfigs = function (data, options) {
         var configs = [];
@@ -71,7 +71,8 @@ module.exports = function (grunt) {
                 'css': '<link href="${file}" rel="stylesheet" />',
                 'ref': '/// <reference path="${file}" />',
                 'raw': '${file}'
-            }
+            },
+            templateFn: {}
         };
 
         var options = _.merge(defaultOptions, this.options());
@@ -108,7 +109,7 @@ module.exports = function (grunt) {
                 } else {
                     block.updateFiles();
                 }
-                
+
                 processor.processBlock(block);
             });
 
