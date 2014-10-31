@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     /**
      * Normalize and return block configurations from the Gruntfile.
      * @param {Object[]|Object.<string, object>} blocks - The block configurations from the Gruntfile.
-     * @returns {BlockConfig[]}
+     * @returns {BlockConfig[]} 
      */
     var getConfigs = function (data, options) {
         var configs = [];
@@ -45,10 +45,10 @@ module.exports = function (grunt) {
      * @param {Object} A source-destination file mapping.
      */
     var validateFile = function (file) {
-        if (file.src.length > 1) {
-            var ignored = file.src.splice(1);
-            grunt.log.errorlns('Expected a single source file. Ignoring ' + ignored.join(', ') + '.');
-        }
+        //if (file.src.length > 1) {
+        //    var ignored = file.src.splice(1);
+        //    grunt.log.errorlns('Expected a single source file. Ignoring ' + ignored.join(', ') + '.');
+        //}
 
         if (!file.src[0]) {
             grunt.warn('Source files not found for pattern "' + file.orig.src[0] + '".');
@@ -71,58 +71,61 @@ module.exports = function (grunt) {
                 'css': '<link href="${file}" rel="stylesheet" />',
                 'ref': '/// <reference path="${file}" />',
                 'raw': '${file}'
-            },
-            templatesFn: {}
+            }
         };
 
         var options = _.merge(defaultOptions, this.options());
 
         this.files.forEach(function (file) {
             validateFile(file);
-            var srcPath = file.src[0];
-            var destPath = file.dest;
+            //var srcPath = file.src[0];
+            //var destPath = file.dest;
+			file.src.forEach(function(srcPath){
 
-            if (!!!file.blocks){
-                grunt.warn('No blocks configured for ' + srcPath);
-            }
+				if (!!!file.blocks){
+					grunt.warn('No blocks configured for ' + srcPath);
+				}
 
-            // There are blocks are defined
-            var targetOpts = _.clone(options);
-            _.merge(targetOpts, file.options);
-            var configs = getConfigs(file.blocks, targetOpts);
+				// There are blocks are defined
+				var targetOpts = _.clone(options);
+				_.merge(targetOpts, file.options);
+				var configs = getConfigs(file.blocks, targetOpts);
 
-            if (configs.length === 0){
-                grunt.warn('No blocks configured for ' + srcPath);
-            }
+				if (configs.length === 0){
+					grunt.warn('No blocks configured for ' + srcPath);
+				}
 
-            var srcFile = new File(srcPath).load();
-            var processor = new FileProcessor(srcFile);
-            var blocks = processor.getBlocks(configs);
+				var srcFile = new File(srcPath).load();
+				var processor = new FileProcessor(srcFile);
+				var blocks = processor.getBlocks(configs);
 
-            grunt.log.debug('Source file before processing.');
-            grunt.log.debug(srcFile.content);
+				grunt.log.debug('Source file before processing.');
+				grunt.log.debug(srcFile.content);
 
-            blocks.forEach(function (block) {
+				blocks.forEach(function (block) {
 
-                if (block.config.rebuild) {
-                    block.rebuildFiles();
-                } else {
-                    block.updateFiles();
-                }
+					if (block.config.rebuild) {
+						block.rebuildFiles();
+					} else {
+						block.updateFiles();
+					}
+					
+					processor.processBlock(block);
+				});
 
-                processor.processBlock(block);
-            });
+				grunt.log.debug('Source file after processing.');
+				grunt.log.debug(srcFile.content);
 
-            grunt.log.debug('Source file after processing.');
-            grunt.log.debug(srcFile.content);
+				var updatedBlocks = blocks.filter(function (block) {
+					return block.changed;
+				});
 
-            var updatedBlocks = blocks.filter(function (block) {
-                return block.changed;
-            });
-
-            if (updatedBlocks.length > 0) {
-                srcFile.save(destPath);
-            }
+				if (updatedBlocks.length > 0) {
+					srcFile.save();
+					//srcFile.save(srcPath);
+					//srcFile.save(destPath);
+				}
+			});
         });
     });
 };
