@@ -45,10 +45,6 @@ module.exports = function (grunt) {
      * @param {Object} A source-destination file mapping.
      */
     var validateFile = function (file) {
-        //if (file.src.length > 1) {
-        //    var ignored = file.src.splice(1);
-        //    grunt.log.errorlns('Expected a single source file. Ignoring ' + ignored.join(', ') + '.');
-        //}
 
         if (!file.src[0]) {
             grunt.warn('Source files not found for pattern "' + file.orig.src[0] + '".');
@@ -78,8 +74,6 @@ module.exports = function (grunt) {
 
         this.files.forEach(function (file) {
             validateFile(file);
-            //var srcPath = file.src[0];
-            //var destPath = file.dest;
 			file.src.forEach(function(srcPath){
 
 				if (!!!file.blocks){
@@ -122,8 +116,6 @@ module.exports = function (grunt) {
 
 				if (updatedBlocks.length > 0) {
 					srcFile.save();
-					//srcFile.save(srcPath);
-					//srcFile.save(destPath);
 				}
 			});
         });
