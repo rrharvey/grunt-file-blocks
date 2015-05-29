@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         var configs = [];
 
         if (_.isArray(data)) {
-            _(data).forEach(function (block) {
+            data.forEach(function (block) {
                 configs.push(new BlockConfig(block.name, block, options));
             });
         } else if (_.isPlainObject(data)) {
