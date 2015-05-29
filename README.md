@@ -75,20 +75,21 @@ Comments define the beginning and end of a [block](https://github.com/rrharvey/g
 
 ### Configure Source Files
 
-One or more [source files](https://github.com/rrharvey/grunt-file-blocks/wiki/Source-Files) must be configured for each Grunt target.
+One or more [source file patterns](https://github.com/rrharvey/grunt-file-blocks/wiki/Source-Files) must be configured for each Grunt target.
 
 ```js
 grunt.initConfig({
   fileblocks: {
     dist: {
-      /* Configure a single source file */
-      src: 'index.html',
+      /* Configure a single source file or globbing pattern */
+      src: '*.html',
       blocks: { /* block definitions */ }
     }
     dev: {
-      /* or multiple source files per target. */
+      /* or multiple source file patterns per target. */
       files: [
-        { src: 'index.html', blocks: {} }
+        { src: 'index.html', blocks: {} },
+        { src: 'app/*.html', blocks: {} },
         { src: 'app/app.ts', blocks: {} }
       ]
     }
