@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 node_modules
 npm-debug.log
 tmp
@@ -161,7 +160,6 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
-# Mac crap
 .DS_Store
->>>>>>> dc6b47d4d9ae30b9bf9b1806a7f8229d997f956f
 *.njsproj
+.vscode/

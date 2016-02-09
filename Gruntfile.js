@@ -79,7 +79,8 @@ module.exports = function(grunt) {
           }]
         }, {
           options: {
-            prefix: ''
+            prefix: '',
+            rebuild: true
           },
           src: ['tmp/sample*.html'],
           blocks: [{
