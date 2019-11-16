@@ -36,7 +36,7 @@
     "grunt-bump": "0.0.13"
   },
   "dependencies": {
-    "lodash": "^3.6.0"
+    "lodash": "^4.17.15"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
